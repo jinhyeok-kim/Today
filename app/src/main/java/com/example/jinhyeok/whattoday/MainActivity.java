@@ -55,10 +55,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
+        Intent settingIntent = new Intent(this, SettingActivity.class);
+
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                startActivity(settingIntent);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
