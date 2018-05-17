@@ -1,9 +1,11 @@
 package com.example.jinhyeok.whattoday;
 
+import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -15,19 +17,34 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Toolbar 선언
     Toolbar myToolbar;
+    private AlarmManager mAlarmManger;
+
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    Button mRefreshBtn;
+
+    LinearLayout layout;
+    LinearLayout.LayoutParams paramText = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +52,24 @@ public class MainActivity extends AppCompatActivity {
 
         //Toolbar 생성
         myToolbar = findViewById(R.id.my_toolbar);
+
+        //시간을 나타내는 버튼 view bind
+        mRefreshBtn = findViewById(R.id.timeRefreshButton);
+
+        layout = findViewById(R.id.timeLayout);
+
+
+
+        //bind listener
+        mRefreshBtn.setOnClickListener(this);
+
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setTitle("하루 메인화면");
+
+        //알람 매너저 취득(?)
+        mAlarmManger = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
 
     }
 
@@ -71,4 +103,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.timeRefreshButton:
+                Toast.makeText(this,"Time Refresh", Toast.LENGTH_SHORT).show();
+                TextView tv = new TextView(this);
+                tv.setText(getTime());
+                tv.setLayoutParams(paramText);
+                layout.addView(tv);
+                break;
+
+                default:
+                    break;
+
+        }
+    }
+
+    private String getTime(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
+    }
 }
