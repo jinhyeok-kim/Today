@@ -16,7 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".AlarmService_Service"/>
         <activity android:name=".SettingActivity"/>
+        <activity android:name=".TimeLogActivity"/>
+            <!--<intent-filter>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@
         app:popupTheme="@style/AlertDialog.AppCompat.Light" />
 
     <LinearLayout
+        android:id="@+id/alarmLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -39,13 +40,12 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-
-        <Button
-            android:id="@+id/timeRefreshButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="현재 시간" />
     </LinearLayout>
+    <Button
+        android:id="@+id/timeRefreshButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="현재 시간" />
 
 
 </LinearLayout>

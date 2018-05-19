@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,12 +39,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    int timeCount = 0;
 
     Button mRefreshBtn;
 
     LinearLayout layout;
     LinearLayout.LayoutParams paramText = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         layout = findViewById(R.id.timeLayout);
 
 
-
         //bind listener
         mRefreshBtn.setOnClickListener(this);
 
@@ -67,9 +69,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         getSupportActionBar().setTitle("하루 메인화면");
 
-        //알람 매너저 취득(?)
-        mAlarmManger = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        getAlarm();
 
+    }
+
+    public void getAlarm() {
+        //알람 매너저 취득(?)
+        mAlarmManger = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + 1000,
+                10000, alarmIntent());
 
     }
 
@@ -105,24 +115,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.timeRefreshButton:
-                Toast.makeText(this,"Time Refresh", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Time Refresh", Toast.LENGTH_SHORT).show();
                 TextView tv = new TextView(this);
-                tv.setText(getTime());
+                tv.setText(timeCount + " : " + getTime());
                 tv.setLayoutParams(paramText);
                 layout.addView(tv);
+
+                timeCount++;
                 break;
 
-                default:
-                    break;
+            default:
+                break;
 
         }
     }
 
-    private String getTime(){
+    private String getTime() {
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
     }
+
+    private PendingIntent alarmIntent() {
+        Toast.makeText(this, "인텐트 실행", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(MainActivity.this, AlarmService_Service.class);
+
+        Intent intent = new Intent(this, AlarmService_Service.class);
+
+        intent.putExtra("currentTime", getTime());
+        PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pi;
+    }
+
 }
