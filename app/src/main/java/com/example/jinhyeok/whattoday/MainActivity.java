@@ -2,10 +2,12 @@ package com.example.jinhyeok.whattoday;
 
 import android.app.ActionBar;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.PersistableBundle;
 import android.os.SystemClock;
@@ -21,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -41,9 +44,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     int timeCount = 0;
 
+    String username;
+
     Button mRefreshBtn;
+    Button textBtn;
 
     LinearLayout layout;
+    LinearLayout textlayout;
     LinearLayout.LayoutParams paramText = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
 
@@ -59,15 +66,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //시간을 나타내는 버튼 view bind
         mRefreshBtn = findViewById(R.id.timeRefreshButton);
 
+        textBtn = findViewById(R.id.textbutton);
+
         layout = findViewById(R.id.timeLayout);
+        textlayout = findViewById(R.id.alarmLayout);
 
 
         //bind listener
         mRefreshBtn.setOnClickListener(this);
+        textBtn.setOnClickListener(this);
 
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setTitle("하루 메인화면");
+
+//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+//
+//        alert.setTitle("Input your name");
+//        alert.setMessage("Plz, input yourname");
+//
+//        final EditText name = new EditText(this);
+//        alert.setView(name);
+//
+//        alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                username = name.getText().toString();
+//            }
+//        });
+//
+//        alert.setNegativeButton("no", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//
+//        alert.show();
+
 
         getAlarm();
 
@@ -125,6 +161,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 timeCount++;
                 break;
+
+//            case R.id.textbutton:
+//                Toast.makeText(this, "Textbutton", Toast.LENGTH_SHORT).show();
+//                TextView ttv = new TextView(this);
+//                ttv.setText("inputText : " + username);
+//                ttv.setLayoutParams(paramText);
+//                textlayout.addView(ttv);
+//
+//                break;
 
             default:
                 break;

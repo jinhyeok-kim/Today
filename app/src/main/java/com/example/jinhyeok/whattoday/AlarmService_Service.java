@@ -11,7 +11,7 @@ public class AlarmService_Service extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent receiveIntent = new Intent(context, TimeLogActivity.class);
+        Intent receiveIntent = new Intent(context, TextPopupActivity.class);
 
         Log.d("서비스","작동하니?");
         receiveIntent.putExtra("currentTime", intent.getStringExtra("currentTime"));

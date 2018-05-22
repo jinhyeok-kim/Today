@@ -33,6 +33,11 @@
             android:text="TextView" />
 
     </LinearLayout>
+    <Button
+        android:id="@+id/textbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
     <LinearLayout
         android:id="@+id/timeLayout"
