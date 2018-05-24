@@ -1,5 +1,6 @@
 package com.example.jinhyeok.whattoday;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -7,21 +8,29 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class TextPopupActivity extends AppCompatActivity {
+public class TextPopupActivity extends Activity {
 
     TextView txtText;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        WindowManager.LayoutParams layoutParams= new WindowManager.LayoutParams();
+        layoutParams.flags= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        layoutParams.dimAmount= 0.7f;
+        getWindow().setAttributes(layoutParams);
+
         setContentView(R.layout.activity_textpopup);
 
-        //UI 객체생성
+
         txtText = findViewById(R.id.txtText);
 
-        //데이터 가져오기
         Intent intent = getIntent();
         String data = intent.getStringExtra("data");
         txtText.setText(data);
@@ -47,11 +56,6 @@ public class TextPopupActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        //안드로이드 백버튼 막기
-        return;
-    }
 
 
 }

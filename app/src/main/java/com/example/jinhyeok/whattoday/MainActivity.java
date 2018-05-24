@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() + 1000,
-                10000, alarmIntent());
+                30000, alarmIntent());
 
     }
 
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -162,14 +163,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timeCount++;
                 break;
 
-//            case R.id.textbutton:
-//                Toast.makeText(this, "Textbutton", Toast.LENGTH_SHORT).show();
-//                TextView ttv = new TextView(this);
-//                ttv.setText("inputText : " + username);
-//                ttv.setLayoutParams(paramText);
-//                textlayout.addView(ttv);
-//
-//                break;
+            case R.id.textbutton:
+                Toast.makeText(this, "Textbutton", Toast.LENGTH_SHORT).show();
+                TextView ttv = new TextView(this);
+                ttv.setText("inputText : " + username);
+                ttv.setLayoutParams(paramText);
+                textlayout.addView(ttv);
+
+                break;
 
             default:
                 break;
@@ -185,13 +186,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private PendingIntent alarmIntent() {
         Toast.makeText(this, "인텐트 실행", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(MainActivity.this, AlarmService_Service.class);
 
-        Intent intent = new Intent(this, AlarmService_Service.class);
+//        Intent intent = new Intent(this, AlarmService_Service.class);
+        Intent intent = new Intent(this, TextPopupActivity.class);
 
-        intent.putExtra("currentTime", getTime());
-        PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.putExtra("data", "Test Popup");
+
+//        intent.putExtra("currentTime", getTime());
+//        PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pi;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==0){
+            if(resultCode==RESULT_OK){
+                //데이터 받기
+                TextView tv = new TextView(this);
+                tv.setText(timeCount + " : " + getTime());
+                tv.setLayoutParams(paramText);
+                textlayout.addView(tv);
+
+                timeCount++;
+            }
+        }
+    }
 }

@@ -19,7 +19,7 @@
         <receiver android:name=".AlarmService_Service"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".TextPopupActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog"/>
+            android:theme="@android:style/Theme.Dialog"/>
         <!--<activity android:name=".TimeLogActivity"/>-->
             <!--<intent-filter>-->
             <!--</intent-filter>-->
