@@ -48,9 +48,10 @@ public class MainActivity extends AppCompatActivity{
 
     //Button Bind
     @BindView(R.id.startAlarm) Button startAlarm;
-    @BindView(R.id.stopAlarm) Button stopButton;
+    @BindView(R.id.stopAlarm) Button stopAlarm;
 
-
+    //AlarmManger declaration
+    private AlarmManager mAlarmManger;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,31 @@ public class MainActivity extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void getAlarm() {
+        //알람 매너저 생성
+        mAlarmManger = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+
+        // Device를 깨운 후 시스템 시간 기준 1초 후 부터 alarmIntent 실행 , 50초 단위로 반복 실행
+        mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + 1000,
+                50000, alarmIntent());
+
+    }
+
+    private PendingIntent alarmIntent() {
+
+        // alarmIntent 실행 Debug용 Toast
+        Toast.makeText(this, "인텐트 실행", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, AlarmService_Service.class);
+        intent.putExtra("data", "Test Popup");
+        PendingIntent pi = PendingIntent.getBroadcast(
+                MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        return pi;
     }
 
 
