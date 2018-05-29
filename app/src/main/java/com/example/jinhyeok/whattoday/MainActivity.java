@@ -35,6 +35,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -47,11 +48,12 @@ public class MainActivity extends AppCompatActivity{
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
 
     //Button Bind
-    @BindView(R.id.startAlarm) Button startAlarm;
-    @BindView(R.id.stopAlarm) Button stopAlarm;
+    @BindView(R.id.startAlarm) Button startAlarmButton;
+    @BindView(R.id.stopAlarm) Button stopAlarmButton;
 
     //AlarmManger declaration
-    private AlarmManager mAlarmManger;
+    public static AlarmManager mAlarmManger = null;
+    public static PendingIntent mAlarmIntent = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity{
         //Use Toolbar
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("하루 메인화면");
+
+
     }
 
     //추가된 소스, ToolBar에 menu.xml을 인플레이트함
@@ -93,17 +97,37 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void getAlarm() {
+    @OnClick(R.id.startAlarm)
+    public void registerAlarm() {
         //알람 매너저 생성
         mAlarmManger = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-
+        // startAlarm 실행 Debug용 Toast
+        Toast.makeText(this, "알람 시작", Toast.LENGTH_SHORT).show();
         // Device를 깨운 후 시스템 시간 기준 1초 후 부터 alarmIntent 실행 , 50초 단위로 반복 실행
         mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() + 1000,
                 50000, alarmIntent());
+    }
+
+    @OnClick(R.id.stopAlarm)
+    public void unregisterAlarm(){
+        // startAlarm 실행 Debug용 Toast
+        Toast.makeText(this, "알람 해제 버튼", Toast.LENGTH_SHORT).show();
+
+        if(mAlarmIntent != null) {
+            Toast.makeText(this, "알람 해제", Toast.LENGTH_SHORT).show();
+
+            //알람 매너저 생성
+            mAlarmManger = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            mAlarmManger.cancel(alarmIntent());
+            mAlarmIntent.cancel();
+            mAlarmManger = null;
+            mAlarmIntent = null;
+        }
 
     }
+
 
     private PendingIntent alarmIntent() {
 
@@ -111,11 +135,12 @@ public class MainActivity extends AppCompatActivity{
         Toast.makeText(this, "인텐트 실행", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, AlarmService_Service.class);
+
         intent.putExtra("data", "Test Popup");
-        PendingIntent pi = PendingIntent.getBroadcast(
+        mAlarmIntent = PendingIntent.getBroadcast(
                 MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        return pi;
+        return mAlarmIntent;
     }
 
 
