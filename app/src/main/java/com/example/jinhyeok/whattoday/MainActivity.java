@@ -37,23 +37,30 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     //Toolbar Bind
-    @BindView(R.id.my_toolbar) Toolbar myToolbar;
+    @BindView(R.id.my_toolbar)
+    Toolbar myToolbar;
 
     //Layout Bind & Layout parameter Setting
-    @BindView(R.id.alarmLayout) LinearLayout alarmLayout;
+    @BindView(R.id.alarmLayout)
+    LinearLayout alarmLayout;
     LinearLayout.LayoutParams paramText = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
 
     //Button Bind
-    @BindView(R.id.startAlarm) Button startAlarmButton;
-    @BindView(R.id.stopAlarm) Button stopAlarmButton;
+    @BindView(R.id.startAlarm)
+    Button startAlarmButton;
+    @BindView(R.id.stopAlarm)
+    Button stopAlarmButton;
 
     //AlarmManger declaration
     public static AlarmManager mAlarmManger = null;
     public static PendingIntent mAlarmIntent = null;
+
+    //Alarm Count
+    int count;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,6 +104,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    //알람 설정
     @OnClick(R.id.startAlarm)
     public void registerAlarm() {
         //알람 매너저 생성
@@ -109,12 +117,13 @@ public class MainActivity extends AppCompatActivity{
                 50000, alarmIntent());
     }
 
+    //알람 해제
     @OnClick(R.id.stopAlarm)
-    public void unregisterAlarm(){
+    public void unregisterAlarm() {
         // startAlarm 실행 Debug용 Toast
         Toast.makeText(this, "알람 해제 버튼", Toast.LENGTH_SHORT).show();
 
-        if(mAlarmIntent != null) {
+        if (mAlarmIntent != null) {
             Toast.makeText(this, "알람 해제", Toast.LENGTH_SHORT).show();
 
             //알람 매너저 생성
@@ -122,6 +131,7 @@ public class MainActivity extends AppCompatActivity{
 
             mAlarmManger.cancel(alarmIntent());
             mAlarmIntent.cancel();
+
             mAlarmManger = null;
             mAlarmIntent = null;
         }
@@ -137,13 +147,29 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(this, AlarmService_Service.class);
 
         intent.putExtra("data", "Test Popup");
+        intent.putExtra("requestCode", 8820);
         mAlarmIntent = PendingIntent.getBroadcast(
-                MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                MainActivity.this, 8820, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         return mAlarmIntent;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 8820) {
+            if (resultCode == RESULT_OK) {
+                //데이터 받기
+                TextView tv = new TextView(this);
+                tv.setText(count + " : " + data.getStringExtra("result"));
+                tv.setLayoutParams(paramText);
+                alarmLayout.addView(tv);
 
+                count++;
+            }
+        }
+
+
+    }
 }
 
 //    //Toolbar 선언
@@ -283,16 +309,16 @@ public class MainActivity extends AppCompatActivity{
 //    }
 //
 //    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if(requestCode==0){
-//            if(resultCode==RESULT_OK){
-//                //데이터 받기
-//                TextView tv = new TextView(this);
-//                tv.setText(timeCount + " : " + getTime());
-//                tv.setLayoutParams(paramText);
-//                textlayout.addView(tv);
-//
-//                timeCount++;
-//            }
-//        }
+////    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+////        if(requestCode==0){
+////            if(resultCode==RESULT_OK){
+////                //데이터 받기
+////                TextView tv = new TextView(this);
+////                tv.setText(timeCount + " : " + getTime());
+////                tv.setLayoutParams(paramText);
+////                textlayout.addView(tv);
+////
+////                timeCount++;
+////            }
+////        }
 //    }

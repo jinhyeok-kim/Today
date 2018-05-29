@@ -1,5 +1,6 @@
 package com.example.jinhyeok.whattoday;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,10 +15,12 @@ public class AlarmService_Service extends BroadcastReceiver {
         Intent receiveIntent = new Intent(context, TextPopupActivity.class);
 
         Log.d("서비스","작동하니?");
-        receiveIntent.putExtra("currentTime", intent.getStringExtra("currentTime"));
+        receiveIntent.putExtra("data", intent.getStringExtra("data"));
+        Log.d("시간", intent.getStringExtra("data"));
 
-        Log.d("시간", intent.getStringExtra("currentTime"));
-        PendingIntent sender = PendingIntent.getActivity(context, 0, receiveIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int code = intent.getIntExtra("requestCode",1);
+
+        PendingIntent sender = PendingIntent.getActivity(context, code, receiveIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         try {
             sender.send();
             Toast.makeText(context, "센드!", Toast.LENGTH_SHORT);
@@ -26,4 +29,5 @@ public class AlarmService_Service extends BroadcastReceiver {
             e.printStackTrace();
         }
     }
+
 }

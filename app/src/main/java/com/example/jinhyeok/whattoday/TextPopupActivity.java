@@ -13,12 +13,16 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
+
 public class TextPopupActivity extends Activity {
+
+//    @BindView(R.id.txtText) TextView txtText;
 
     TextView txtText;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams layoutParams= new WindowManager.LayoutParams();
