@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity{
     LinearLayout.LayoutParams paramText = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
 
+    //Button Bind
+    @BindView(R.id.startAlarm) Button startAlarm;
+    @BindView(R.id.stopAlarm) Button stopButton;
+
 
 
     @Override
