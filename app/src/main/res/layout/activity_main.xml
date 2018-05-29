@@ -33,24 +33,25 @@
             android:text="TextView" />
 
     </LinearLayout>
-    <Button
-        android:id="@+id/textbutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
     <LinearLayout
-        android:id="@+id/timeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-    </LinearLayout>
-    <Button
-        android:id="@+id/timeRefreshButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="현재 시간" />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/startAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알림 시작"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/stopAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알림 중지"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

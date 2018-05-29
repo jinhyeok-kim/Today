@@ -38,7 +38,14 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity{
 
+    //Toolbar Bind
     @BindView(R.id.my_toolbar) Toolbar myToolbar;
+
+    //Layout Bind & Layout parameter Setting
+    @BindView(R.id.alarmLayout) LinearLayout alarmLayout;
+    LinearLayout.LayoutParams paramText = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+
 
 
     @Override
@@ -47,6 +54,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //Use Toolbar
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("하루 메인화면");
     }
@@ -80,7 +88,9 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+
 }
+
 //    //Toolbar 선언
 //    Toolbar myToolbar;
 //    private AlarmManager mAlarmManger;
