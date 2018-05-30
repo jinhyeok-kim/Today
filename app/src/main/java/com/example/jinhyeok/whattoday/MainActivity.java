@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //추가된 소스, ToolBar에 menu.xml을 인플레이트함
+    //ToolBar에 menu.xml을 인플레이트함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
+    //ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         return mAlarmIntent;
     }
 
+    //왜 안돼애애애애ㅐ애애애애애ㅐ
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 8820) {

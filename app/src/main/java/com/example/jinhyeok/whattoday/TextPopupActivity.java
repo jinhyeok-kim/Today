@@ -14,16 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class TextPopupActivity extends Activity {
 
-//    @BindView(R.id.txtText) TextView txtText;
-
-    TextView txtText;
+    @BindView(R.id.txtText) TextView txtText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //툴바 창 안보이게, 레이아웃 크기 제한
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams layoutParams= new WindowManager.LayoutParams();
         layoutParams.flags= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
@@ -32,8 +32,7 @@ public class TextPopupActivity extends Activity {
 
         setContentView(R.layout.activity_textpopup);
 
-
-        txtText = findViewById(R.id.txtText);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         String data = intent.getStringExtra("data");
