@@ -5,7 +5,7 @@ public class Work {
     private int _id;
     private String time;
     private String content;
-    
+
     public int get_id() {
         return _id;
     }

@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
     private DBHelper dbHelper;
     String dbName = "time_content.db";
 
+    //DB View
+    @BindView(R.id.lvWorks)
+    ListView lvWork;
+    @BindView(R.id.btnSelectAllData)
+    Button btnSelectAllData;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 null, //커서팩토리 - null 이면 표준 커서 사용
                 1); //데이터베이스 버전
 
-
+        dbHelper.testDB();
 
 
 
@@ -184,6 +192,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @OnClick(R.id.btnSelectAllData)
+    public void visibleData(){
+        lvWork.setVisibility(View.VISIBLE);
+        // DB Helper가 Null이면 초기화
+        if( dbHelper == null){
+            dbHelper = new DBHelper(MainActivity.this, //현재 화면의 제어권자
+                    dbName, //데이터베이스 이름
+                    null, //커서팩토리 - null 이면 표준 커서 사용
+                    1); //데이터베이스 버전
+        }
+
+        // 1. Work 데이터를 모두 가져온다.
+        List works = dbHelper.getAllWorkData();
+
+        // 2. ListView에 Work 데이터를 모두 보여줌
+        lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
     }
 }
 
