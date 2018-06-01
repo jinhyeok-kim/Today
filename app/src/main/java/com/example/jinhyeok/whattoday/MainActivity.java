@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     //Alarm Count
     int count;
 
+    //DB
+    private DBHelper dbHelper;
+    String dbName = "time_content.db";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,16 @@ public class MainActivity extends AppCompatActivity {
         //Use Toolbar
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("하루 메인화면");
+
+        //DB creation
+        dbHelper = new DBHelper(
+                MainActivity.this, //현재 화면의 제어권자
+                dbName, //데이터베이스 이름
+                null, //커서팩토리 - null 이면 표준 커서 사용
+                1); //데이터베이스 버전
+
+
+
 
 
     }
