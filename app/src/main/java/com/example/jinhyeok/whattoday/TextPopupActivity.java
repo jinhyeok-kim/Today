@@ -13,12 +13,22 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TextPopupActivity extends Activity {
 
     @BindView(R.id.txtText) TextView txtText;
+
+    private DBHelper dbHelper;
+
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +43,15 @@ public class TextPopupActivity extends Activity {
         setContentView(R.layout.activity_textpopup);
 
         ButterKnife.bind(this);
+
+        if(dbHelper == null){
+            dbHelper = new DBHelper(this , "time_content.db", null, 1);
+        }
+        Work work = new Work();
+        work.setTime(getTime());
+
+        dbHelper.addWork(work);
+
 
         Intent intent = getIntent();
         String data = intent.getStringExtra("data");
@@ -58,6 +77,14 @@ public class TextPopupActivity extends Activity {
         }
         return true;
     }
+
+    private String getTime() {
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
+    }
+
+
 
 
 

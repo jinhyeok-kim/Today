@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     //DB
     private DBHelper dbHelper;
+
     String dbName = "time_content.db";
 
     //DB View
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         // Device를 깨운 후 시스템 시간 기준 1초 후 부터 alarmIntent 실행 , 50초 단위로 반복 실행
         mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() + 1000,
-                50000, alarmIntent());
+                60000, alarmIntent());
     }
 
     //알람 해제

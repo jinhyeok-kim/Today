@@ -74,6 +74,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public List getAllWorkData() {
+        Toast.makeText(context, "data 가져오기", Toast.LENGTH_SHORT).show();
+
         StringBuffer sb = new StringBuffer();
         sb.append(" SELECT _ID, TIME, CONTENT FROM WORK_TABLE ");
         // 읽기 전용 DB 객체를 만든다.
