@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +23,14 @@ import butterknife.ButterKnife;
 public class TextPopupActivity extends Activity {
 
     @BindView(R.id.txtText) TextView txtText;
+    @BindView(R.id.editText) EditText editText;
 
     private DBHelper dbHelper;
 
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time;
 
 
     @Override
@@ -44,13 +47,9 @@ public class TextPopupActivity extends Activity {
 
         ButterKnife.bind(this);
 
-        if(dbHelper == null){
-            dbHelper = new DBHelper(this , "time_content.db", null, 1);
-        }
-        Work work = new Work();
-        work.setTime(getTime());
 
-        dbHelper.addWork(work);
+        time = getTime();
+
 
 
         Intent intent = getIntent();
@@ -64,6 +63,17 @@ public class TextPopupActivity extends Activity {
         Intent intent = new Intent();
         intent.putExtra("result", "Close Popup");
         setResult(RESULT_OK, intent);
+
+        String editTxt = editText.getText().toString();
+
+        if(dbHelper == null){
+            dbHelper = new DBHelper(this , "time_content.db", null, 1);
+        }
+        Work work = new Work();
+        work.setTime(time);
+        work.setContent(editTxt);
+
+        dbHelper.addWork(work);
 
         //액티비티(팝업) 닫기
         finish();
