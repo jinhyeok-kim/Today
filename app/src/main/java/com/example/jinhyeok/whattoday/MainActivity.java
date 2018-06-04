@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper.testDB();
 
-
-
     }
 
     //ToolBar에 menu.xml을 인플레이트함
@@ -191,8 +189,6 @@ public class MainActivity extends AppCompatActivity {
                 count++;
             }
         }
-
-
     }
 
     @OnClick(R.id.btnSelectAllData)
@@ -206,10 +202,10 @@ public class MainActivity extends AppCompatActivity {
                     1); //데이터베이스 버전
         }
 
-        // 1. Work 데이터를 모두 가져온다.
+        // 1. DayWork 데이터를 모두 가져온다.
         List works = dbHelper.getAllWorkData();
 
-        // 2. ListView에 Work 데이터를 모두 보여줌
+        // 2. ListView에 DayWork 데이터를 모두 보여줌
         lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
     }
 }

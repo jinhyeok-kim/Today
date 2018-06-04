@@ -1,6 +1,6 @@
 package com.example.jinhyeok.whattoday;
 
-public class Work {
+public class DayWork {
 
     private int _id;
     private String time;

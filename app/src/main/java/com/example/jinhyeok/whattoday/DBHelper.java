@@ -53,11 +53,11 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
     }
 
-    public void addWork(Work work){
+    public void addWork(DayWork dayWork){
         // 1. 쓸 수 있는 DB 객체를 가져옴
         SQLiteDatabase db = getWritableDatabase();
 
-        // 2. Work Data를 Insert한다.
+        // 2. DayWork Data를 Insert한다.
         // _id는 자동으로 증가하기 때문에 넣지 않음
         StringBuffer sb = new StringBuffer();
         sb.append(" INSERT INTO WORK_TABLE ( ");
@@ -66,8 +66,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(sb.toString(),
                 new Object[]{
-                work.getTime(),
-                work.getContent()});
+                dayWork.getTime(),
+                dayWork.getContent()});
 
         Toast.makeText(context, "Insert 완료", Toast.LENGTH_SHORT).show();
 
@@ -82,15 +82,15 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(sb.toString(), null);
         List works = new ArrayList();
-        Work work = null;
+        DayWork dayWork = null;
         // moveToNext 다음에 데이터가 있으면 true 없으면 false
         while (cursor.moveToNext()) {
-            work = new Work();
-            work.set_id(cursor.getInt(0));
-            work.setTime(cursor.getString(1));
-            work.setContent(cursor.getString(2));
+            dayWork = new DayWork();
+            dayWork.set_id(cursor.getInt(0));
+            dayWork.setTime(cursor.getString(1));
+            dayWork.setContent(cursor.getString(2));
 
-            works.add(work);
+            works.add(dayWork);
         }
         return works;
 

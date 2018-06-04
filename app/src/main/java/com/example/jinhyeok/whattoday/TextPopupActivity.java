@@ -3,16 +3,12 @@ package com.example.jinhyeok.whattoday;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,11 +65,11 @@ public class TextPopupActivity extends Activity {
         if(dbHelper == null){
             dbHelper = new DBHelper(this , "time_content.db", null, 1);
         }
-        Work work = new Work();
-        work.setTime(time);
-        work.setContent(editTxt);
+        DayWork dayWork = new DayWork();
+        dayWork.setTime(time);
+        dayWork.setContent(editTxt);
 
-        dbHelper.addWork(work);
+        dbHelper.addWork(dayWork);
 
         //액티비티(팝업) 닫기
         finish();

@@ -21,6 +21,7 @@ public class AlarmService_Service extends BroadcastReceiver {
         int code = intent.getIntExtra("requestCode",1);
 
         PendingIntent sender = PendingIntent.getActivity(context, code, receiveIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         try {
             sender.send();
             Toast.makeText(context, "센드!", Toast.LENGTH_SHORT);

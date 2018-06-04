@@ -69,10 +69,10 @@ public class WorkListAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
         // 한 명의 데이터를 받아와서 입력
-        Work work = (Work) getItem(position);
-        holder.tvId.setText(work.get_id() + "");
-        holder.tvTime.setText(work.getTime() + "");
-        holder.tvContent.setText(work.getContent() + "");
+        DayWork dayWork = (DayWork) getItem(position);
+        holder.tvId.setText(dayWork.get_id() + "");
+        holder.tvTime.setText(dayWork.getTime() + "");
+        holder.tvContent.setText(dayWork.getContent() + "");
 
         return convertView;
     }
