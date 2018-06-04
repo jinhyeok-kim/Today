@@ -13,7 +13,7 @@ public class SettingsFragment extends PreferenceFragment {
 
     SharedPreferences prefs;
 
-    ListPreference soundPreference;
+    ListPreference timePreference;
     ListPreference keywordSoundPreference;
     PreferenceScreen keywordScreen;
 
@@ -23,14 +23,14 @@ public class SettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.setting_preference);
 
-        soundPreference = (ListPreference) findPreference("sound_list");
+        timePreference = (ListPreference) findPreference("time_interval_list");
         keywordSoundPreference = (ListPreference)findPreference("keyword_sound_list");
         keywordScreen = (PreferenceScreen) findPreference("keyword_screen");
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        if(!prefs.getString("sound_list", "").equals("")){
-            soundPreference.setSummary(prefs.getString("sound_list", "카톡"));
+        if(!prefs.getString("time_interval_list", "").equals("")){
+            timePreference.setSummary(prefs.getString("time_interval_list", "1분"));
         }
 
         if(!prefs.getString("keyword_sound_list", "").equals("")){
@@ -48,8 +48,8 @@ public class SettingsFragment extends PreferenceFragment {
     SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if(key.equals("sound_list")){
-                soundPreference.setSummary(prefs.getString("sound_list", "카톡"));
+            if(key.equals("time_interval_list")){
+                timePreference.setSummary(prefs.getString("time_interval_list", "1분"));
             }
 
             if(key.equals("keyword_sound_list")){

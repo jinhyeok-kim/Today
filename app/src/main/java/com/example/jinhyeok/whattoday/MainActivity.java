@@ -9,8 +9,10 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.PersistableBundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btnSelectAllData)
     Button btnSelectAllData;
 
+    //Setting
+    SharedPreferences sharedPref;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Use Toolbar
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("하루 메인화면");
+        getSupportActionBar().setTitle("메인화면");
+
+        //Setting
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         //DB creation
         dbHelper = new DBHelper(
@@ -93,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 1); //데이터베이스 버전
 
         dbHelper.testDB();
+
 
     }
 
@@ -135,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         // Device를 깨운 후 시스템 시간 기준 1초 후 부터 alarmIntent 실행 , 50초 단위로 반복 실행
         mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() + 1000,
-                60000, alarmIntent());
+                settingalarmIntervalTime(), alarmIntent());
     }
 
     //알람 해제
@@ -207,5 +216,35 @@ public class MainActivity extends AppCompatActivity {
 
         // 2. ListView에 DayWork 데이터를 모두 보여줌
         lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
+    }
+
+    public int settingalarmIntervalTime(){
+
+        int time = 0;
+
+        Toast.makeText(this, "설정 들어감", Toast.LENGTH_SHORT).show();
+
+
+        switch(sharedPref.getString("time_interval_list", "1분")){
+            case "1분":
+                time = 60000;
+                break;
+            case "2분":
+                time = 120000;
+                break;
+            case "3분":
+                time = 180000;
+                break;
+            case "4분":
+                time = 240000;
+                break;
+            default:
+                time = 60000;
+        }
+
+        Log.d("알람 설정 들어감", String.valueOf(time));
+
+        return time;
+
     }
 }
