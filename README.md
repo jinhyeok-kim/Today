@@ -24,6 +24,7 @@ Development Progress
 > - AlarmManger 기본적인 동작 구현
 > - SettingFragment 구현 및 작동 확인
 > - Text 팝업 ProtoType 구현
+> - MainActivity DB ListView 실시간 갱신 후 노출 기능 구현(18.06.15)
 
 TODO:
 ------------------------

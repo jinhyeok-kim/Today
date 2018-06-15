@@ -247,6 +247,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    // 사용자가 일시 중지된 상태에서 액티비티로 돌아오면 시스템은 액티비티를 재개하고
+    // onResume() 메서드를 호출합니다.
     @Override
     protected void onResume() {
         super.onResume();
