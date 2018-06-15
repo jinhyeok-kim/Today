@@ -177,9 +177,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AlarmService_Service.class);
 
         intent.putExtra("data", "Test Popup");
-        intent.putExtra("requestCode", 8820);
         mAlarmIntent = PendingIntent.getBroadcast(
-                MainActivity.this, 8820, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         return mAlarmIntent;
     }
@@ -246,5 +245,24 @@ public class MainActivity extends AppCompatActivity {
 
         return time;
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        lvWork.setVisibility(View.VISIBLE);
+        // DB Helper가 Null이면 초기화
+        if( dbHelper == null){
+            dbHelper = new DBHelper(MainActivity.this, //현재 화면의 제어권자
+                    dbName, //데이터베이스 이름
+                    null, //커서팩토리 - null 이면 표준 커서 사용
+                    1); //데이터베이스 버전
+        }
+
+        // 1. DayWork 데이터를 모두 가져온다.
+        List works = dbHelper.getAllWorkData();
+
+        // 2. ListView에 DayWork 데이터를 모두 보여줌
+        lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
     }
 }
