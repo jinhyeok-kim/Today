@@ -184,20 +184,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //왜 안돼애애애애ㅐ애애애애애ㅐ
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 8820) {
-            if (resultCode == RESULT_OK) {
-                //데이터 받기
-                TextView tv = new TextView(this);
-                tv.setText(count + " : " + data.getStringExtra("result"));
-                tv.setLayoutParams(paramText);
-                alarmLayout.addView(tv);
-
-                count++;
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == 8820) {
+//            if (resultCode == RESULT_OK) {
+//                //데이터 받기
+//                TextView tv = new TextView(this);
+//                tv.setText(count + " : " + data.getStringExtra("result"));
+//                tv.setLayoutParams(paramText);
+//                alarmLayout.addView(tv);
+//
+//                count++;
+//            }
+//        }
+//    }
 
     @OnClick(R.id.btnSelectAllData)
     public void visibleData(){

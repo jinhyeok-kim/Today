@@ -70,7 +70,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 dayWork.getContent()});
 
         Toast.makeText(context, "Insert 완료", Toast.LENGTH_SHORT).show();
-
     }
 
     public List getAllWorkData() {
