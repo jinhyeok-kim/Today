@@ -25,12 +25,12 @@ Development Progress
 > - SettingFragment 구현 및 작동 확인
 > - Text 팝업 ProtoType 구현
 > - MainActivity DB ListView 실시간 갱신 후 노출 기능 구현(18.06.15)
+> - AlarmManger SystemClock에서 RealTime Clock으로 교체(18.06.26)
 
 TODO:
 ------------------------
 > **Note:**
 
-> - AlarmManger SystemClock에서 RealTime Clock으로 교체
 > - 하고 있던 일을 등록한 시간과 해당하는 일의 정보를 관리하는 Model Class 생성
 > > **!** 몇 월 며칠을 parameter로 받아서 처리를 할 수 있도록
 > > **!** 하루를 DB에 저장 및 관리하는 역할
