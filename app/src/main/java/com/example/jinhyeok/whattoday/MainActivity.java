@@ -142,10 +142,26 @@ public class MainActivity extends AppCompatActivity {
         // startAlarm 실행 Debug용 Toast
         Toast.makeText(this, "알람 시작", Toast.LENGTH_SHORT).show();
         // Device를 깨운 후 시스템 시간 기준 1초 후 부터 alarmIntent 실행 , 50초 단위로 반복 실행
-        mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + 1000,
+//        mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                SystemClock.elapsedRealtime() + 1000,
+//                settingalarmIntervalTime(), alarmIntent());
+        mAlarmManger.setRepeating(AlarmManager.RTC_WAKEUP,
+                triggerTime(),
                 settingalarmIntervalTime(), alarmIntent());
     }
+
+    private long triggerTime() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH");
+        int timeFormat = Integer.parseInt(formatter.format(System.currentTimeMillis()));
+
+        calendar.set(Calendar.HOUR_OF_DAY, timeFormat+1);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        return calendar.getTimeInMillis();
+    }
+
 
     //알람 해제
     @OnClick(R.id.stopAlarm)
