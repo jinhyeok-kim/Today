@@ -1,19 +1,11 @@
 package com.example.jinhyeok.whattoday;
 
-import android.app.ActionBar;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.PersistableBundle;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,19 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -145,18 +131,37 @@ public class MainActivity extends AppCompatActivity {
 //        mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
 //                SystemClock.elapsedRealtime() + 1000,
 //                settingalarmIntervalTime(), alarmIntent());
+
+        //realTime으로 수정 완료
         mAlarmManger.setRepeating(AlarmManager.RTC_WAKEUP,
-                triggerTime(),
+                alarmTriggerTime(),
                 settingalarmIntervalTime(), alarmIntent());
     }
 
-    private long triggerTime() {
+    //알람을 실행하는 시간 설정 함수
+    private long alarmTriggerTime() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH");
-        int timeFormat = Integer.parseInt(formatter.format(System.currentTimeMillis()));
 
-        calendar.set(Calendar.HOUR_OF_DAY, timeFormat+1);
-        calendar.set(Calendar.MINUTE, 0);
+        // 시간 단위
+        SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
+        int timeFormat = Integer.parseInt(formatter.format(System.currentTimeMillis()));
+        int alarmHour = timeFormat/100;
+        int alarmMinute = timeFormat%100;
+
+        // 1시간 단위 알람
+        alarmHour = alarmHour+1;
+        alarmHour = 0;
+
+        //30분 단위로 알람을 울릴 경우
+//        if(timeFormat%100 >= 30){
+//            alarmHour = alarmHour+1;
+//            alarmMinute = 0;
+//        }else{
+//            alarmMinute = 30;
+//        }
+
+        calendar.set(Calendar.HOUR_OF_DAY, alarmHour);
+        calendar.set(Calendar.MINUTE, alarmMinute);
         calendar.set(Calendar.SECOND, 0);
 
         return calendar.getTimeInMillis();
@@ -198,22 +203,6 @@ public class MainActivity extends AppCompatActivity {
 
         return mAlarmIntent;
     }
-
-    //왜 안돼애애애애ㅐ애애애애애ㅐ
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == 8820) {
-//            if (resultCode == RESULT_OK) {
-//                //데이터 받기
-//                TextView tv = new TextView(this);
-//                tv.setText(count + " : " + data.getStringExtra("result"));
-//                tv.setLayoutParams(paramText);
-//                alarmLayout.addView(tv);
-//
-//                count++;
-//            }
-//        }
-//    }
 
     @OnClick(R.id.btnSelectAllData)
     public void visibleData(){
