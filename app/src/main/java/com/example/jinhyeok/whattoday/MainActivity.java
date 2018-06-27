@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper.testDB();
 
+        registerAlarm();
+        AlarmAvailabeCheck();
 
     }
 
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 1시간 단위 알람
         alarmHour = alarmHour+1;
-        alarmHour = 0;
+        alarmMinute = 0;
 
         //30분 단위로 알람을 울릴 경우
 //        if(timeFormat%100 >= 30){
@@ -263,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        AlarmAvailabeCheck();
+
         lvWork.setVisibility(View.VISIBLE);
         // DB Helper가 Null이면 초기화
         if( dbHelper == null){
@@ -283,5 +287,14 @@ public class MainActivity extends AppCompatActivity {
 
         // 2. ListView에 DayWork 데이터를 모두 보여줌
         lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
+    }
+
+    protected void AlarmAvailabeCheck(){
+        SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
+        int timeFormat = Integer.parseInt(formatter.format(System.currentTimeMillis()));
+
+        if(timeFormat >= 22 || timeFormat <= 6){
+            unregisterAlarm();
+        }
     }
 }
