@@ -215,8 +215,14 @@ public class MainActivity extends AppCompatActivity {
                     1); //데이터베이스 버전
         }
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String currentTime = formatter.format(System.currentTimeMillis());
+
+
+        List works = dbHelper.getDayWorkData(currentTime);
+
         // 1. DayWork 데이터를 모두 가져온다.
-        List works = dbHelper.getAllWorkData();
+//        List works = dbHelper.getAllWorkData();
 
         // 2. ListView에 DayWork 데이터를 모두 보여줌
         lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
@@ -266,8 +272,14 @@ public class MainActivity extends AppCompatActivity {
                     1); //데이터베이스 버전
         }
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String currentTime = formatter.format(System.currentTimeMillis());
+
+
+        List works = dbHelper.getDayWorkData(currentTime);
+
         // 1. DayWork 데이터를 모두 가져온다.
-        List works = dbHelper.getAllWorkData();
+//        List works = dbHelper.getAllWorkData();
 
         // 2. ListView에 DayWork 데이터를 모두 보여줌
         lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));

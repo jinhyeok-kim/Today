@@ -92,8 +92,31 @@ public class DBHelper extends SQLiteOpenHelper {
             works.add(dayWork);
         }
         return works;
-
     }
+
+    public List getDayWorkData(String today) {
+        Toast.makeText(context, "하루 data 가져오기", Toast.LENGTH_SHORT).show();
+        
+        StringBuffer sb = new StringBuffer();
+        sb.append(" SELECT * FROM WORK_TABLE WHERE TIME >");
+        sb.append("'" +today + "'" + ";");
+        // 읽기 전용 DB 객체를 만든다.
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sb.toString(), null);
+        List works = new ArrayList();
+        DayWork dayWork = null;
+        // moveToNext 다음에 데이터가 있으면 true 없으면 false
+        while (cursor.moveToNext()) {
+            dayWork = new DayWork();
+            dayWork.set_id(cursor.getInt(0));
+            dayWork.setTime(cursor.getString(1));
+            dayWork.setContent(cursor.getString(2));
+
+            works.add(dayWork);
+        }
+        return works;
+    }
+
 
 
 }
