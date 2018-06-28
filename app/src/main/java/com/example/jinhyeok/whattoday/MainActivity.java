@@ -72,9 +72,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+
         //Use Toolbar
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("메인화면");
+        getSupportActionBar().setTitle(formatter.format(System.currentTimeMillis()));
 
         //Setting
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -151,16 +154,16 @@ public class MainActivity extends AppCompatActivity {
         int alarmMinute = timeFormat%100;
 
         // 1시간 단위 알람
-        alarmHour = alarmHour+1;
-        alarmMinute = 0;
+//        alarmHour = alarmHour+1;
+//        alarmMinute = 0;
 
         //30분 단위로 알람을 울릴 경우
-//        if(timeFormat%100 >= 30){
-//            alarmHour = alarmHour+1;
-//            alarmMinute = 0;
-//        }else{
-//            alarmMinute = 30;
-//        }
+        if(timeFormat%100 >= 30){
+            alarmHour = alarmHour+1;
+            alarmMinute = 0;
+        }else{
+            alarmMinute = 30;
+        }
 
         calendar.set(Calendar.HOUR_OF_DAY, alarmHour);
         calendar.set(Calendar.MINUTE, alarmMinute);
