@@ -29,6 +29,8 @@ Development Progress
 > - 1시간 단위로 알람이 올 수 있도록 구현(30분 확장성 고려하여 구현)(18.06.26)
 > - View에 뿌려지는 DB의 데이터가 하루 단위로 뿌려지도록 구현(18.06.27)
 > - 알람 7시부터 11시사이에 알람이 올 수 있도록 구현(18.06.27)
+> - 가로형 달력 UI 적용(18.07.01)
+> - 달력의 날짜 선택에 따라 해당하는 DB 불러오기 구현(구현 더 필요함)(18.07.01)
 
 
 TODO:
@@ -46,16 +48,18 @@ TODO:
 > - ListView 꾸미기
 안드로이드 커스텀 리스트뷰
 > - 스크롤 할 시 이 전 날의 DB가 노출되도록 구현
-> - 리스트뷰는 아이폰 캘린더 기준으로 UI 구현
+> - 리스트뷰는 아이폰 캘린더 기준으로 UI 구현 (Medium completion)
 > - 처음엔 7시부터 11시에 알람이 올 수 있도록 구현
 쿼리를 바꿔야함. 현재는 전체지만 그 날 당일꺼만 가져올 수 있도록  (Complete)
 > - 한시간 단위로 알람이 올 수 있도록 구현 (Complete)
-> - * 위의 경우로 구현하더라도 확장성있게 구현하도록 만들기 
+>  * 위의 경우로 구현하더라도 확장성있게 구현하도록 만들기 
 
 ### Libray
 
 > - Butterknife : 안드로이드의 View와 Activity를 보다 쉽게 연결해주고, 코드의 반복을 줄여주는 라이브러리
 > http://jakewharton.github.io/butterknife/
+> - Horizontal Calendar : 안드로이드 UI 라이브러리 중 하나로, 가로형 달력을 표현해주는 UI 라이브러리
+> https://github.com/Mulham-Raee/Horizontal-Calendar
 
 ### Development Environment
 
