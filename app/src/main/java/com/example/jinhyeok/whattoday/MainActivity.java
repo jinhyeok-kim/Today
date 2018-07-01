@@ -151,7 +151,9 @@ public class MainActivity extends AppCompatActivity {
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                String selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
+//                selectedDateStr = DateFormat.format("EEE, MMM d, yyyy", date).toString();
+                String selectedDateStr = DateFormat.format("yyyy-MM-dd", date).toString();
+                dayOfData(selectedDateStr);
                 Toast.makeText(MainActivity.this, selectedDateStr + " selected!", Toast.LENGTH_SHORT).show();
                 Log.i("onDateSelected", selectedDateStr + " - Position = " + position);
             }
@@ -358,6 +360,26 @@ public class MainActivity extends AppCompatActivity {
         // 2. ListView에 DayWork 데이터를 모두 보여줌
         lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
     }
+
+    public void dayOfData(String date){
+        lvWork.setVisibility(View.VISIBLE);
+        // DB Helper가 Null이면 초기화
+        if( dbHelper == null){
+            dbHelper = new DBHelper(MainActivity.this, //현재 화면의 제어권자
+                    dbName, //데이터베이스 이름
+                    null, //커서팩토리 - null 이면 표준 커서 사용
+                    1); //데이터베이스 버전
+        }
+
+        List works = dbHelper.getDayWorkData(date);
+
+        // 1. DayWork 데이터를 모두 가져온다.
+//        List works = dbHelper.getAllWorkData();
+
+        // 2. ListView에 DayWork 데이터를 모두 보여줌
+        lvWork.setAdapter(new WorkListAdapter(works, MainActivity.this));
+    }
+
 
     protected void AlarmAvailabeCheck(){
         SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
