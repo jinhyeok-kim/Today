@@ -59,7 +59,7 @@ TODO:
 > - Butterknife : 안드로이드의 View와 Activity를 보다 쉽게 연결해주고, 코드의 반복을 줄여주는 라이브러리
 > http://jakewharton.github.io/butterknife/
 > - Horizontal Calendar : 안드로이드 UI 라이브러리 중 하나로, 가로형 달력을 표현해주는 UI 라이브러리
-> https://github.com/Mulham-Raee/Horizontal-Calendar
+> https://github.com/Mulham-Raee/Horizontal-Calendar 
 
 ### Development Environment
 
