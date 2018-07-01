@@ -8,16 +8,21 @@
     tools:context=".MainActivity">
 
     <!--툴바, 추가된 소스-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/AlertDialog.AppCompat.Light" />
-
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+        <!--android:elevation="4dp"-->
+        <!--app:popupTheme="@style/AlertDialog.AppCompat.Light"-->
     <LinearLayout
         android:id="@+id/alarmLayout"
         android:layout_width="match_parent"
@@ -64,6 +69,8 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
 
 
 
