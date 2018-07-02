@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         // Default Date set to Today.
         final Calendar defaultSelectedDate = Calendar.getInstance();
 
-        dayOfData(DateFormat.format("yyyy-MM-dd", defaultSelectedDate).toString())b;
+        dayOfData(DateFormat.format("yyyy-MM-dd", defaultSelectedDate).toString());
 
         horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
@@ -159,13 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                horizontalCalendar.goToday(false);
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
 
 
         registerAlarm();
@@ -193,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 startActivity(settingIntent);
+                return true;
+            case R.id.today:
+                Toast.makeText(getApplicationContext(), "오늘로 돌아감", Toast.LENGTH_LONG).show();
+                horizontalCalendar.goToday(false);
+
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
