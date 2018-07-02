@@ -97,9 +97,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public List getDayWorkData(String today) {
         Toast.makeText(context, "하루 data 가져오기", Toast.LENGTH_SHORT).show();
 
+
         StringBuffer sb = new StringBuffer();
-        sb.append(" SELECT * FROM WORK_TABLE WHERE TIME >");
-        sb.append("'" +today + "'" + ";");
+        sb.append(" SELECT * FROM WORK_TABLE WHERE TIME LIKE \"" + today +"%\"");
+
         // 읽기 전용 DB 객체를 만든다.
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(sb.toString(), null);

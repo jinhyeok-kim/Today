@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(settingIntent);
                 return true;
             case R.id.today:
-                Toast.makeText(getApplicationContext(), "오늘로 돌아감", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "오늘로 돌아감 ", Toast.LENGTH_LONG).show();
                 horizontalCalendar.goToday(false);
 
                 return true;
