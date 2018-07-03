@@ -44,15 +44,15 @@ public class WorkListAdapter extends BaseAdapter {
             ((LinearLayout) convertView).setOrientation(LinearLayout.HORIZONTAL);
 
             TextView tvId = new TextView(context);
-            tvId.setPadding(10, 0, 20, 0);
+            tvId.setPadding(10, 20, 20, 20);
             tvId.setTextColor(Color.rgb(0, 0, 0));
 
             TextView tvTime = new TextView(context);
-            tvTime.setPadding(20, 0, 20, 0);
+            tvTime.setPadding(20, 20, 20, 20);
             tvTime.setTextColor(Color.rgb(0, 0, 0));
 
             TextView tvContent = new TextView(context);
-            tvContent.setPadding(20, 0, 20, 0);
+            tvContent.setPadding(20, 20, 20, 20);
             tvContent.setTextColor(Color.rgb(0, 0, 0));
 
             ((LinearLayout) convertView).addView(tvId);
