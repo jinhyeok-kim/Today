@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
     private HorizontalCalendar horizontalCalendar;
     private String selectedDateStr;
 
+    //현재 알람 간격
+    private String currentAlarmInterval;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.testDB();
 
 
+        currentAlarmInterval = sharedPref.getString("time_interval_list", "1시간");
 
         /* start 2 months ago from now */
         Calendar startDate = Calendar.getInstance();
@@ -130,12 +134,13 @@ public class MainActivity extends AppCompatActivity {
                 .addEvents(new CalendarEventsPredicate() {
 
                     Random rnd = new Random();
+
                     @Override
                     public List<CalendarEvent> events(Calendar date) {
                         List<CalendarEvent> events = new ArrayList<>();
                         int count = rnd.nextInt(6);
 
-                        for (int i = 0; i <= count; i++){
+                        for (int i = 0; i <= count; i++) {
                             events.add(new CalendarEvent(Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)), "event"));
                         }
 
@@ -158,9 +163,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-//        FloatingActionButton fab = findViewById(R.id.fab);
-
 
         registerAlarm();
 //        AlarmAvailabeCheck();
@@ -209,14 +211,14 @@ public class MainActivity extends AppCompatActivity {
         // startAlarm 실행 Debug용 Toast
         Toast.makeText(this, "알람 시작", Toast.LENGTH_SHORT).show();
         // Device를 깨운 후 시스템 시간 기준 1초 후 부터 alarmIntent 실행 , 50초 단위로 반복 실행
-        mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + 1000,
-                settingalarmIntervalTime(), alarmIntent());
+//        mAlarmManger.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                SystemClock.elapsedRealtime() + 1000,
+//                settingalarmIntervalTime(), alarmIntent());
 
         //realTime으로 수정 완료
-//        mAlarmManger.setRepeating(AlarmManager.RTC_WAKEUP,
-//                alarmTriggerTime(),
-//                settingalarmIntervalTime(), alarmIntent());
+        mAlarmManger.setRepeating(AlarmManager.RTC_WAKEUP,
+                alarmTriggerTime(),
+                settingalarmIntervalTime(), alarmIntent());
     }
 
 
@@ -224,22 +226,47 @@ public class MainActivity extends AppCompatActivity {
     private long alarmTriggerTime() {
         Calendar calendar = Calendar.getInstance();
 
+
         // 시간 단위
         SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
         int timeFormat = Integer.parseInt(formatter.format(System.currentTimeMillis()));
-        int alarmHour = timeFormat/100;
-        int alarmMinute = timeFormat%100;
+        int alarmHour = timeFormat / 100;
+        int alarmMinute = timeFormat % 100;
 
-        // 1시간 단위 알람
-//        alarmHour = alarmHour+1;
-//        alarmMinute = 0;
-
-        //30분 단위로 알람을 울릴 경우
-        if(timeFormat%100 >= 30){
-            alarmHour = alarmHour+1;
-            alarmMinute = 0;
-        }else{
-            alarmMinute = 30;
+        switch (currentAlarmInterval) {
+            case "1분":
+                break;
+            case "5분":
+                if (timeFormat % 100 >= 55) {
+                    alarmHour = alarmHour + 1;
+                    alarmMinute = 0;
+                } else{
+                    alarmMinute = alarmMinute + 5-((timeFormat%100)%5);
+                }
+                break;
+            case "15분":
+                if (timeFormat % 100 >= 45) {
+                    alarmHour = alarmHour + 1;
+                    alarmMinute = 0;
+                } else {
+                    alarmMinute = alarmMinute + 15-((timeFormat%100)%15);
+                }
+                break;
+            case "30분":
+                if (timeFormat % 100 >= 30) {
+                    alarmHour = alarmHour + 1;
+                    alarmMinute = 0;
+                } else {
+                    alarmMinute = 30;
+                }
+                break;
+            case "1시간":
+                alarmHour = alarmHour+1;
+                alarmMinute = 0;
+                break;
+            default:
+                alarmHour = alarmHour+1;
+                alarmMinute = 0;
         }
 
         calendar.set(Calendar.HOUR_OF_DAY, alarmHour);
@@ -254,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.stopAlarm)
     public void unregisterAlarm() {
         // startAlarm 실행 Debug용 Toast
-        Toast.makeText(this, "알람 해제 버튼", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "알람 해제 버튼", Toast.LENGTH_SHORT).show();
 
         if (mAlarmIntent != null) {
             Toast.makeText(this, "알람 해제", Toast.LENGTH_SHORT).show();
@@ -286,28 +313,32 @@ public class MainActivity extends AppCompatActivity {
         return mAlarmIntent;
     }
 
-    public int settingalarmIntervalTime(){
+    public int settingalarmIntervalTime() {
 
         int time = 0;
 
-        Toast.makeText(this, "설정 들어감", Toast.LENGTH_SHORT).show();
+        currentAlarmInterval = sharedPref.getString("time_interval_list", "1시간");
+        Toast.makeText(this, "현재 알람 간격 : " + currentAlarmInterval, Toast.LENGTH_SHORT).show();
 
 
-        switch(sharedPref.getString("time_interval_list", "1분")){
+        switch (currentAlarmInterval) {
             case "1분":
                 time = 60000;
                 break;
-            case "2분":
-                time = 120000;
+            case "5분":
+                time = 60000*5;
                 break;
-            case "3분":
-                time = 180000;
+            case "15분":
+                time = 60000*15;
                 break;
-            case "4분":
-                time = 240000;
+            case "30분":
+                time = 60000*30;
+                break;
+            case "1시간":
+                time = 60000*60;
                 break;
             default:
-                time = 60000;
+                time = 60000*60;;
         }
 
         Log.d("알람 설정 들어감", String.valueOf(time));
@@ -321,21 +352,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        AlarmAvailabeCheck();
+        AlarmAvailabeCheck();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String currentTime = formatter.format(System.currentTimeMillis());
 
-        if(currentTime.equals(selectedDateStr)) {
+        if (currentTime.equals(selectedDateStr)) {
             dayOfData(currentTime);
         }
 
     }
 
-    public void dayOfData(String date){
+    public void dayOfData(String date) {
         lvWork.setVisibility(View.VISIBLE);
         // DB Helper가 Null이면 초기화
-        if( dbHelper == null){
+        if (dbHelper == null) {
             dbHelper = new DBHelper(MainActivity.this, //현재 화면의 제어권자
                     dbName, //데이터베이스 이름
                     null, //커서팩토리 - null 이면 표준 커서 사용
@@ -352,13 +383,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    protected void AlarmAvailabeCheck(){
-        Toast.makeText(getApplicationContext(), "이용이 제한된 시간입니다.", Toast.LENGTH_LONG).show();
+    protected void AlarmAvailabeCheck() {
         SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
         int timeFormat = Integer.parseInt(formatter.format(System.currentTimeMillis()));
 
-        if(timeFormat >= 22 || timeFormat <= 6){
+        if(timeFormat == 25){
+//        if (timeFormat >= 22 || timeFormat <= 6) {
+            Toast.makeText(getApplicationContext(), "이용이 제한된 시간입니다.", Toast.LENGTH_LONG).show();
             unregisterAlarm();
+        } else {
+            if(currentAlarmInterval.equals(sharedPref.getString("time_interval_list", "30분")))
+            {
+                if (mAlarmIntent == null) {
+                    registerAlarm();
+                }
+            }
+            else{
+                unregisterAlarm();
+                registerAlarm();
+            }
+
         }
     }
 }
